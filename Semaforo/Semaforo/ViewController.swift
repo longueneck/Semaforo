@@ -9,6 +9,9 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    var remainingTime = 10
+    var timer = Timer()
+    
     let rect : UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -38,11 +41,25 @@ class ViewController: UIViewController {
             return view
         }()
     
+     
+    
+    let timeLabel : UILabel = {
+        let time = UILabel()
+        time.text = "\(remainingTime)"
+        time.textColor = .white
+        time.backgroundColor = .black
+        time.font = .systemFont(ofSize: 40)
+        time.translatesAutoresizingMaskIntoConstraints = false
+        time.textAlignment = .center
+        return time
+        }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         addSubViews()
         addConstraints()
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
     }
     
     
@@ -51,6 +68,7 @@ class ViewController: UIViewController {
         self.view.addSubview(red)
         self.view.addSubview(yellow)
         self.view.addSubview(green)
+        self.view.addSubview(timeLabel)
     }
     
     
@@ -77,18 +95,20 @@ class ViewController: UIViewController {
             green.widthAnchor.constraint(equalToConstant: 75),
             green.heightAnchor.constraint(equalToConstant: 75),
             
+            timeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            timeLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100),
+            timeLabel.widthAnchor.constraint(equalToConstant: 100)
+            
             ])
 
             red.layer.cornerRadius = 40
             yellow.layer.cornerRadius = 40
             green.layer.cornerRadius = 40
         
-        
     
-        
     }
     
-    
-    
+   
+       
 }
 
